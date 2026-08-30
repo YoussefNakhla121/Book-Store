@@ -4,8 +4,8 @@
   "description": "Book Store REST API backend (Node.js + Express + MongoDB)",
   "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "express": "^4.19.2",
