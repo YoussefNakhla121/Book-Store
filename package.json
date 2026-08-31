@@ -2,19 +2,19 @@
   "name": "book-store-api",
   "version": "1.0.0",
   "description": "Book Store REST API backend (Node.js + Express + MongoDB)",
-  "main": "src/server.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "mongoose": "^8.5.0",
-    "jsonwebtoken": "^9.0.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "express-validator": "^7.1.0"
-
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
