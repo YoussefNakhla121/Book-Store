@@ -3,8 +3,14 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
-const bookRoutes = require("./routes/bookRoutes");
-const categoryRoutes = require("./routes/categoryRoutes");
+const bookRoutes = require("./routes/book.routes");
+const categoryRoutes = require("./routes/category.routes");
+const userRoutes = require("./routes/user.routes");
+const authRoutes = require("./routes/auth.routes");
+const reviewRoutes = require("./routes/review.routes");
+const wishlistRoutes = require("./routes/wishlist.routes");
+const orderRoutes = require("./routes/order.routes");
+const cartRoutes = require("./routes/cart.routes");
 
 dotenv.config();
 
@@ -19,6 +25,14 @@ app.use(cors());
 app.use(express.json());
 
 // Home Route
+
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
+app.use("/api/v1/wishlist", wishlistRoutes);
+app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/cart", cartRoutes);
+
 
 app.get("/", (req, res) => {
   res.status(200).json({
