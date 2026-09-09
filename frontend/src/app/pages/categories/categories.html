@@ -1,0 +1,51 @@
+<div class="categories-page">
+
+  <h1>📚 Categories</h1>
+
+  @if (loading) {
+
+    <div class="message">
+      Loading categories...
+    </div>
+
+  } @else if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  } @else if (categories.length === 0) {
+
+    <div class="message">
+      No categories found.
+    </div>
+
+  } @else {
+
+    <div class="categories-grid">
+
+      @for (category of categories; track $index) {
+
+        <div class="category-card">
+
+          <h2>
+            {{ category.name }}
+          </h2>
+
+          @if (category.description) {
+
+            <p>
+              {{ category.description }}
+            </p>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

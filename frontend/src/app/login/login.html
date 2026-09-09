@@ -1,0 +1,58 @@
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+    <h3 class="text-center mb-4">Login</h3>
+
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input 
+          type="email" 
+          id="email"
+          name="email" 
+          class="form-control" 
+          ngModel 
+          required 
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
+          #emailInput="ngModel">
+        @if (emailInput.invalid && emailInput.touched) {
+          <div class="text-danger small mt-1">
+            @if (emailInput.errors?.['required']) { email is required }
+            @if (emailInput.errors?.['pattern']) { you must do like : user@example.com }
+          </div>
+        }
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          class="form-control" 
+          ngModel 
+          required 
+          minlength="6" 
+          #passwordInput="ngModel">
+
+        @if (passwordInput.invalid && passwordInput.touched) {
+          <div class="text-danger small mt-1">
+            @if (passwordInput.errors?.['required']) { password is required }
+            @if (passwordInput.errors?.['minlength']) { password must be at least 6 characters }
+          </div>
+        }
+      </div>
+<button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
+  Login
+</button>
+@if (errorMessage) {
+  <div class="alert alert-danger mt-3 text-center py-2">
+    {{ errorMessage }}
+  </div>
+}
+
+<div class="text-center mt-3">
+  <small>Don't have an account? <a routerLink="/register">Register here</a></small>
+</div>
+    </form>
+  </div>
+</div>

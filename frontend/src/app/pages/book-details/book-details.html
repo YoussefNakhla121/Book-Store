@@ -1,0 +1,289 @@
+<div class="details-page">
+
+  <button
+    class="back-button"
+    type="button"
+    (click)="goBack()"
+  >
+    ← Back to Books
+  </button>
+
+  @if (loading) {
+
+    <div class="loading-container">
+      <div class="loader"></div>
+      <p>Loading book details...</p>
+    </div>
+
+  } @else if (errorMessage) {
+
+    <div class="error-container">
+      <div class="error-icon">⚠</div>
+
+      <h2>{{ errorMessage }}</h2>
+
+      <button
+        class="back-error-button"
+        type="button"
+        (click)="goBack()"
+      >
+        Back to Books
+      </button>
+    </div>
+
+  } @else if (book) {
+
+    <div class="details-card">
+
+      <!-- Book Image -->
+      <div class="image-section">
+
+        <div class="image-wrapper">
+
+          @if (book.images && book.images.length > 0) {
+
+            <img
+              [src]="book.images[0].replace('/isbn/', '/b/isbn/')"
+              [alt]="book.title"
+              decoding="async"
+            />
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- Book Information -->
+      <div class="info-section">
+
+        <!-- Category -->
+        <div class="book-category">
+          {{ book.category?.name || 'Book' }}
+        </div>
+
+
+        <!-- Title -->
+        <h1>{{ book.title }}</h1>
+
+
+        <!-- Author -->
+        <h3 class="author">
+          By <span>{{ book.author }}</span>
+        </h3>
+
+
+        <!-- Rating -->
+        <div class="rating-row">
+
+          <span class="stars">
+            ★★★★★
+          </span>
+
+          <span class="rating">
+            {{ book.averageRating || 0 }}
+          </span>
+
+          <span class="reviews">
+            ({{ book.numReviews || 0 }} reviews)
+          </span>
+
+        </div>
+
+
+        <div class="separator"></div>
+
+
+        <!-- Description -->
+        <div class="description">
+
+          <h3>Description</h3>
+
+          <p>
+            {{ book.description }}
+          </p>
+
+        </div>
+
+
+        <!-- Price -->
+        <div class="price-section">
+
+          @if (
+            book.discountPrice !== undefined &&
+            book.discountPrice !== null
+          ) {
+
+            <span class="old-price">
+              {{ book.price }} EGP
+            </span>
+
+            <span class="discount-price">
+              {{ book.discountPrice }} EGP
+            </span>
+
+          } @else {
+
+            <span class="main-price">
+              {{ book.price }} EGP
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- Stock -->
+        <div class="stock-section">
+
+          @if (book.stock > 0) {
+
+            <span class="stock-icon">
+              ✓
+            </span>
+
+            <span class="in-stock">
+              In Stock
+            </span>
+
+            <span class="stock-number">
+              ({{ book.stock }} available)
+            </span>
+
+          } @else {
+
+            <span class="out-stock">
+              ✕ Out of Stock
+            </span>
+
+          }
+
+        </div>
+
+
+        <div class="separator"></div>
+
+
+        <!-- Purchase -->
+        @if (book.stock > 0) {
+
+          <div class="purchase-section">
+
+            <div class="quantity-title">
+              Quantity
+            </div>
+
+
+            <!-- Quantity -->
+            <div class="quantity-box">
+
+              <button
+                type="button"
+                class="quantity-button"
+                (click)="decreaseQuantity()"
+                [disabled]="quantity === 1"
+              >
+                −
+              </button>
+
+
+              <span class="quantity">
+                {{ quantity }}
+              </span>
+
+
+              <button
+                type="button"
+                class="quantity-button"
+                (click)="increaseQuantity()"
+                [disabled]="quantity >= book.stock"
+              >
+                +
+              </button>
+
+            </div>
+
+
+            <!-- Add To Cart -->
+            <button
+              type="button"
+              class="add-cart-button"
+            >
+              🛒 Add to Cart
+            </button>
+
+
+            <!-- Buy Now -->
+            <button
+              type="button"
+              class="buy-button"
+            >
+              Buy Now
+            </button>
+
+          </div>
+
+        }
+
+
+        <!-- Book Meta -->
+        <div class="book-meta">
+
+          @if (book.isbn) {
+
+            <div class="meta-item">
+
+              <span>
+                ISBN
+              </span>
+
+              <strong>
+                {{ book.isbn }}
+              </strong>
+
+            </div>
+
+          }
+
+
+          <div class="meta-item">
+
+            <span>
+              Category
+            </span>
+
+            <strong>
+              {{ book.category?.name || 'N/A' }}
+            </strong>
+
+          </div>
+
+
+          <div class="meta-item">
+
+            <span>
+              Availability
+            </span>
+
+            <strong>
+
+              @if (book.stock > 0) {
+                Available
+              } @else {
+                Out of stock
+              }
+
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

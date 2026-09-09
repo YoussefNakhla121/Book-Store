@@ -1,0 +1,41 @@
+.categories-page {
+  padding: 30px;
+}
+
+.categories-page h1 {
+  margin-bottom: 30px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.category-card h2 {
+  margin-bottom: 10px;
+}
+
+.category-card p {
+  margin: 0;
+  color: #666;
+}
+
+.message {
+  padding: 20px;
+  text-align: center;
+}
+
+.error {
+  padding: 20px;
+  color: red;
+  text-align: center;
+}

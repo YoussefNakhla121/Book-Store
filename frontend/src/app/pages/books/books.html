@@ -1,0 +1,256 @@
+<div class="page">
+
+  <header class="header">
+
+    <div>
+      <h1>📚 Book Store</h1>
+
+      <p>
+        Discover your favorite books
+      </p>
+    </div>
+
+  </header>
+
+
+  <section class="filters">
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        [(ngModel)]="search"
+        placeholder="Search by title, author..."
+        (keyup.enter)="searchBooks()"
+      />
+
+      <button
+        (click)="searchBooks()"
+      >
+        Search
+      </button>
+
+    </div>
+
+
+    <select
+      [(ngModel)]="selectedCategory"
+      (change)="filterBooks()"
+    >
+
+      <option value="">
+        All Categories
+      </option>
+
+      @for (
+        category of categories;
+        track category._id
+      ) {
+
+        <option
+          [value]="category._id"
+        >
+          {{ category.name }}
+        </option>
+
+      }
+
+    </select>
+
+
+    <select
+      [(ngModel)]="selectedSort"
+      (change)="sortBooks()"
+    >
+
+      <option value="">
+        Sort By
+      </option>
+
+      <option value="price">
+        Price: Low to High
+      </option>
+
+      <option value="-price">
+        Price: High to Low
+      </option>
+
+      <option value="title">
+        Title: A to Z
+      </option>
+
+      <option value="-title">
+        Title: Z to A
+      </option>
+
+      <option value="stock">
+        Stock: Low to High
+      </option>
+
+      <option value="-stock">
+        Stock: High to Low
+      </option>
+
+    </select>
+
+  </section>
+
+
+  @if (loading) {
+
+    <div class="message">
+      Loading books...
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+
+  @if (!loading && !errorMessage) {
+
+    <div class="result-info">
+
+      <span>
+        {{ totalBooks }} books found
+      </span>
+
+      <span>
+        Page {{ page }} of {{ totalPages }}
+      </span>
+
+    </div>
+
+
+    <section class="books-grid">
+
+      @for (
+        book of books;
+        track book._id
+      ) {
+
+        <article
+          class="book-card"
+          (click)="openBook(book._id)"
+        >
+
+          <div class="image-container">
+
+            <img
+              [src]="book.images?.[0]?.replace('/isbn/', '/b/isbn/').replace('-L.jpg', '-M.jpg')"
+              [alt]="book.title"
+              loading="lazy"
+              decoding="async"
+              width="300"
+              height="320"
+            />
+
+          </div>
+
+
+          <div class="book-content">
+
+            <h2>
+              {{ book.title }}
+            </h2>
+
+            <p class="author">
+              {{ book.author }}
+            </p>
+
+            <p class="description">
+              {{ book.description }}
+            </p>
+
+
+            <div class="price">
+
+              @if (
+                book.discountPrice !== undefined
+              ) {
+
+                <span class="old-price">
+                  {{ book.price }} EGP
+                </span>
+
+                <span class="discount-price">
+                  {{ book.discountPrice }} EGP
+                </span>
+
+              } @else {
+
+                <span class="normal-price">
+                  {{ book.price }} EGP
+                </span>
+
+              }
+
+            </div>
+
+
+            <div class="book-footer">
+
+              <span>
+                📦 Stock:
+                {{ book.stock }}
+              </span>
+
+              <span>
+                ⭐
+                {{ book.averageRating }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      }
+
+    </section>
+
+
+    @if (books.length === 0) {
+
+      <div class="message">
+        No books found.
+      </div>
+
+    }
+
+
+    <div class="pagination">
+
+      <button
+        (click)="previousPage()"
+        [disabled]="page === 1"
+      >
+        ← Previous
+      </button>
+
+
+      <span>
+        Page {{ page }} / {{ totalPages }}
+      </span>
+
+
+      <button
+        (click)="nextPage()"
+        [disabled]="page === totalPages"
+      >
+        Next →
+      </button>
+
+    </div>
+
+  }
+
+</div>
